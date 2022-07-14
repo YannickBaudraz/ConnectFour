@@ -1,8 +1,8 @@
-# Power 4
+# Connect 4
 
 ## Goal
 
-The goal of this project is to create a power 4 game, where 2 players can challenge each other.
+The goal of this project is to create a `Connect 4` game, where 2 players can challenge each other.
 
 1. The first user chooses a nickname and gets the URL to share to invite other players
 2. Player 2 also chooses a nickname and joins the game
