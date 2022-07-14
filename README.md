@@ -67,6 +67,10 @@ receive updates of the state of our game.
 5. Online game
 6. Deployment
 
+## Documentation
+
+### [State](./doc/state/README.md)
+
 --- 
 
 This project is from the [Grafikart tutorial videos](https://grafikart.fr/formations/puissance-4-websocket).
