@@ -23,6 +23,7 @@ The goal of this project is to create a `Connect 4` game, where 2 players can ch
 - [Fastify](https://www.fastify.io/)
   - [@fastify/websocket](https://www.npmjs.com/package/@fastify/websocket)
 - [Vite](https://vite.net/)
+- [Vitest](https://vitest.dev/)
 
 ## Technological choices
 
@@ -82,6 +83,13 @@ This bundler is fast and simple to use.
 I usually use npm or yarn, and I wanted to test a new dependency manager.
 
 This package is also faster than npm.
+
+### Tests
+
+Of course, we need tests to make sure that the code works as expected without always having to test the whole game by
+hand.
+
+I use `Vitest` because it integrates very well with Vite.
 
 ## Planning
 

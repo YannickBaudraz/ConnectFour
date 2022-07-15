@@ -52,7 +52,7 @@ export const Connect4Machine = Connect4Model.createMachine({
     [Connect4States.PLAY]: {
       on: {
         dropPawn: {
-          target: '???'
+          target: Connect4States.PLAY
         }
       }
     },
