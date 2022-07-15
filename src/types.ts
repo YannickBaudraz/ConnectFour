@@ -32,3 +32,8 @@ export type Connect4Guard<T extends Connect4Events['type']> = (
     context: Connect4Context,
     event: Connect4Event<T>
 ) => boolean;
+
+export type Connect4Action<T extends Connect4Events['type']> = (
+    context: Connect4Context,
+    event: Connect4Event<T>
+) => Partial<Connect4Context>;
