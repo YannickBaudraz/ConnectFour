@@ -15,3 +15,7 @@ export enum PlayerColor {
   PINK = '#EA4C6C',
   GREEN = '#55DC79',
 }
+
+export type CellEmpty = 'E';
+export type Cell = PlayerColor.PINK | PlayerColor.GREEN | CellEmpty;
+export type Connect4Grid = Cell[][];
