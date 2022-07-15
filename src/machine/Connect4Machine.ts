@@ -1,5 +1,7 @@
 import { createModel } from 'xstate/lib/model';
 import { Connect4Grid, Connect4States, Player } from '../types';
+import { joinConnect4Action } from './actions';
+import { canJoinConnect4Guard } from './guards';
 
 export const Connect4Model = createModel({
   players: [] as Player[],
@@ -32,6 +34,8 @@ export const Connect4Machine = Connect4Model.createMachine({
     [Connect4States.LOBBY]: {
       on: {
         join: {
+          cond: canJoinConnect4Guard,
+          actions: [ Connect4Model.assign(joinConnect4Action) ],
           target: Connect4States.LOBBY
         },
         leave: {
