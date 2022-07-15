@@ -1,5 +1,5 @@
 import { createModel } from 'xstate/lib/model';
-import { Connect4Grid, Player } from '../types';
+import { Connect4Grid, Connect4States, Player } from '../types';
 
 export const Connect4Model = createModel({
   players: [] as Player[],
@@ -21,5 +21,50 @@ export const Connect4Model = createModel({
     start: (playerId: Player['id']) => ({ playerId }),
     dropPawn: (playerId: Player['id'], row: number) => ({ playerId, row }),
     restart: (playerId: Player['id']) => ({ playerId })
+  }
+});
+
+export const Connect4Machine = Connect4Model.createMachine({
+  id: 'game',
+  context: Connect4Model.initialContext,
+  initial: Connect4States.LOBBY,
+  states: {
+    [Connect4States.LOBBY]: {
+      on: {
+        join: {
+          target: Connect4States.LOBBY
+        },
+        leave: {
+          target: Connect4States.LOBBY
+        },
+        chooseColor: {
+          target: Connect4States.PLAY
+        },
+        start: {
+          target: Connect4States.PLAY
+        }
+      }
+    },
+    [Connect4States.PLAY]: {
+      on: {
+        dropPawn: {
+          target: '???'
+        }
+      }
+    },
+    [Connect4States.VICTORY]: {
+      on: {
+        restart: {
+          target: Connect4States.LOBBY
+        }
+      }
+    },
+    [Connect4States.DRAW]: {
+      on: {
+        restart: {
+          target: Connect4States.LOBBY
+        }
+      }
+    }
   }
 });
