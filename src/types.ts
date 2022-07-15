@@ -1,4 +1,4 @@
-import { ContextFrom } from 'xstate';
+import { ContextFrom, EventFrom } from 'xstate';
 import { Connect4Model } from './machine/Connect4Machine';
 
 export enum Connect4States {
@@ -24,3 +24,6 @@ export type Cell = PlayerColor.PINK | PlayerColor.GREEN | CellEmpty;
 export type Connect4Grid = Cell[][];
 
 export type Connect4Context = ContextFrom<typeof Connect4Model>
+
+export type Connect4Events = EventFrom<typeof Connect4Model>
+export type Connect4Event<T extends Connect4Events['type']> = Connect4Events & { type: T }
