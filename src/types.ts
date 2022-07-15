@@ -27,3 +27,8 @@ export type Connect4Context = ContextFrom<typeof Connect4Model>
 
 export type Connect4Events = EventFrom<typeof Connect4Model>
 export type Connect4Event<T extends Connect4Events['type']> = Connect4Events & { type: T }
+
+export type Connect4Guard<T extends Connect4Events['type']> = (
+    context: Connect4Context,
+    event: Connect4Event<T>
+) => boolean;
