@@ -11,3 +11,7 @@ export const leaveConnect4Action: Connect4Action<'leave'> = (context, event) => 
 export const chooseColorConnect4Action: Connect4Action<'chooseColor'> = (context, event) => ({
   players: context.players.map(p => p.id === event.playerId ? { ...p, color: event.color } : p)
 });
+
+export const startConnect4Action: Connect4Action<'start'> = (context, event) => ({
+  currentPlayer: context.players.find(p => p.id === event.playerId)
+});

@@ -1,13 +1,17 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { interpret, InterpreterFrom } from 'xstate';
 import { Connect4Machine, Connect4Model } from '../../../src/machine/Connect4Machine';
-import { Player, PlayerColor } from '../../../src/types';
+import { Connect4States, Player, PlayerColor } from '../../../src/types';
 
 describe('lobby', () => {
 
   let machine: InterpreterFrom<typeof Connect4Machine>;
+
   const player1 = { id: 1, name: 'player1' };
   const player2 = { id: 2, name: 'player2' };
+
+  const PINK = PlayerColor.PINK;
+  const GREEN = PlayerColor.GREEN;
 
   beforeEach(() => {
     machine = interpret(Connect4Machine).start();
@@ -17,48 +21,46 @@ describe('lobby', () => {
 
     it('should allow a player to join if there are no players', () => {
 
-      const machineState = makePlayerJoin(1, 'player1');
+      const machineState = makePlayerJoin(player1.id, 'player1');
 
       expect(machineState.changed).toBeTruthy();
       expect(machineState.context.players).toEqual([ player1 ]);
     });
 
     it('should allow a player to join if there are only one player', () => {
-      makePlayerJoin(1, 'player1');
+      makePlayerJoin(player1.id, 'player1');
 
-      const machineState = makePlayerJoin(2, 'player2');
+      const machineState = makePlayerJoin(player2.id, 'player2');
 
       expect(machineState.changed).toBeTruthy();
       expect(machineState.context.players).toEqual([ player1, player2 ]);
     });
 
     it('should not allow a player to join twice', () => {
-      makePlayerJoin(1, 'player1');
+      makePlayerJoin(player1.id, 'player1');
 
-      const machineState = makePlayerJoin(1, 'player1');
+      const machineState = makePlayerJoin(player1.id, 'player1');
 
       expect(machineState.changed).toBeFalsy();
-      expect(machineState.context.players).toEqual([ player1 ]);
     });
 
     it('should not allow a player to join if there are already two players', () => {
-      makePlayerJoin(1, 'player1');
-      makePlayerJoin(2, 'player2');
+      makePlayerJoin(player1.id, 'player1');
+      makePlayerJoin(player2.id, 'player2');
 
       const machineState = makePlayerJoin(3, 'player3');
 
       expect(machineState.changed).toBeFalsy();
-      expect(machineState.context.players).toEqual([ player1, player2 ]);
     });
   });
 
   describe('on leave', () => {
 
     it('should allow a player to leave if he\'s in the game', () => {
-      makePlayerJoin(1, 'player1');
-      makePlayerJoin(2, 'player2');
+      makePlayerJoin(player1.id, 'player1');
+      makePlayerJoin(player2.id, 'player2');
 
-      const machineState = makePlayerLeave(1);
+      const machineState = makePlayerLeave(player1.id);
 
       expect(machineState.changed).toBeTruthy();
       expect(machineState.context.players).toEqual([ player2 ]);
@@ -69,46 +71,42 @@ describe('lobby', () => {
       const machineState = makePlayerLeave(17);
 
       expect(machineState.changed).toBeFalsy();
-      expect(machineState.context.players).toEqual([]);
     });
   });
 
   describe('on chooseColor', () => {
 
-    const PINK = PlayerColor.PINK;
-    const GREEN = PlayerColor.GREEN;
-
     it('should allow a player to choose a color if he\'s in the game', () => {
-      makePlayerJoin(1, 'player1');
+      makePlayerJoin(player1.id, 'player1');
 
-      const machineState = makePlayerChooseColor(1, PINK);
+      const machineState = makePlayerChooseColor(player1.id, PINK);
 
       expect(machineState.changed).toBeTruthy();
-      expect(machineState.context.players).toEqual([ getPlayerWithColor(1, PINK) ]);
+      expect(machineState.context.players).toEqual([ getPlayerWithColor(player1.id, PINK) ]);
     });
 
     it('should allow the second player to choose a difference color than the first player', () => {
-      makePlayerJoin(1, 'player1');
-      makePlayerChooseColor(1, PINK);
-      makePlayerJoin(2, 'player2');
+      makePlayerJoin(player1.id, 'player1');
+      makePlayerChooseColor(player1.id, PINK);
+      makePlayerJoin(player2.id, 'player2');
 
-      const machineState = makePlayerChooseColor(2, GREEN);
+      const machineState = makePlayerChooseColor(player2.id, GREEN);
 
       expect(machineState.changed).toBeTruthy();
       expect(machineState.context.players).toEqual([
-        getPlayerWithColor(1, PINK),
-        getPlayerWithColor(2, GREEN)
+        getPlayerWithColor(player1.id, PINK),
+        getPlayerWithColor(player2.id, GREEN)
       ]);
     });
 
     it('should allow a player to change his color', () => {
-      makePlayerJoin(1, 'player1');
-      makePlayerChooseColor(1, PINK);
+      makePlayerJoin(player1.id, 'player1');
+      makePlayerChooseColor(player1.id, PINK);
 
-      const machineState = makePlayerChooseColor(1, GREEN);
+      const machineState = makePlayerChooseColor(player1.id, GREEN);
 
       expect(machineState.changed).toBeTruthy();
-      expect(machineState.context.players).toEqual([ getPlayerWithColor(1, GREEN) ]);
+      expect(machineState.context.players).toEqual([ getPlayerWithColor(player1.id, GREEN) ]);
     });
 
     it('should not allow a player to choose a color if he\'s not in the game', () => {
@@ -116,21 +114,50 @@ describe('lobby', () => {
       const machineState = makePlayerChooseColor(17, PINK);
 
       expect(machineState.changed).toBeFalsy();
-      expect(machineState.context.players).toEqual([]);
     });
 
     it('should not allow a player to choose a color if this color is not available', () => {
-      makePlayerJoin(1, 'player1');
-      makePlayerJoin(2, 'player2');
-      makePlayerChooseColor(1, PINK);
+      makePlayerJoin(player1.id, 'player1');
+      makePlayerJoin(player2.id, 'player2');
+      makePlayerChooseColor(player1.id, PINK);
 
-      const machineState = makePlayerChooseColor(2, PINK);
+      const machineState = makePlayerChooseColor(player2.id, PINK);
 
       expect(machineState.changed).toBeFalsy();
-      expect(machineState.context.players).toEqual([
-        getPlayerWithColor(1, PINK),
-        player2
-      ]);
+    });
+  });
+
+  describe('on start', () => {
+
+    it('should allow a player in the lobby to start the game if they are two and have chosen a color', () => {
+      makePlayerJoin(player1.id, 'player1');
+      makePlayerChooseColor(player1.id, PINK);
+      makePlayerJoin(player2.id, 'player2');
+      makePlayerChooseColor(player2.id, GREEN);
+      const expectedCurrentPlayer = getPlayerWithColor(player2.id, GREEN);
+
+      const machineState = makePlayerStart(player2.id);
+
+      expect(machineState.changed).toBeTruthy();
+      expect(machineState.context.currentPlayer).toEqual(expectedCurrentPlayer);
+      expect(machine.state.value).toBe(Connect4States.PLAY);
+    });
+
+    it('should not allow a player to start the game if he\'s not in the game', () => {
+
+      const machineState = makePlayerStart(17);
+
+      expect(machineState.changed).toBeFalsy();
+    });
+
+    it('should not allow a player to start if there is not 2 players with a color', () => {
+      makePlayerJoin(player1.id, 'player1');
+      makePlayerChooseColor(player1.id, PINK);
+      makePlayerJoin(player2.id, 'player2');
+
+      const machineState = makePlayerStart(player1.id);
+
+      expect(machineState.changed).toBeFalsy();
     });
   });
 
@@ -147,6 +174,11 @@ describe('lobby', () => {
   function makePlayerChooseColor(playerId: Player['id'], color: PlayerColor) {
     const chooseColorEvent = Connect4Model.events.chooseColor(playerId, color);
     return machine.send(chooseColorEvent);
+  }
+
+  function makePlayerStart(playerId: Player['id']) {
+    const startEvent = Connect4Model.events.start(playerId);
+    return machine.send(startEvent);
   }
 
   function getPlayerWithColor(playerId: Player['id'], color: PlayerColor) {

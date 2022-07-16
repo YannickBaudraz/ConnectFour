@@ -1,11 +1,16 @@
 import { createModel } from 'xstate/lib/model';
 import { Connect4Grid, Connect4States, Player, PlayerColor } from '../types';
-import { chooseColorConnect4Action, joinConnect4Action, leaveConnect4Action } from './actions';
-import { canChooseColorConnect4Guard, canJoinConnect4Guard, canLeaveConnect4Guard } from './guards';
+import { chooseColorConnect4Action, joinConnect4Action, leaveConnect4Action, startConnect4Action } from './actions';
+import {
+  canChooseColorConnect4Guard,
+  canJoinConnect4Guard,
+  canLeaveConnect4Guard,
+  canStartConnect4Guard
+} from './guards';
 
 export const Connect4Model = createModel({
   players: [] as Player[],
-  currentPlayer: null as null | Player['id'],
+  currentPlayer: null as null | Player,
   rowLength: 4,
   grid: [
     [ 'E', 'E', 'E', 'E', 'E', 'E', 'E' ],
@@ -49,6 +54,8 @@ export const Connect4Machine = Connect4Model.createMachine({
           target: Connect4States.LOBBY
         },
         start: {
+          cond: canStartConnect4Guard,
+          actions: [ Connect4Model.assign(startConnect4Action) ],
           target: Connect4States.PLAY
         }
       }

@@ -18,6 +18,18 @@ export const canChooseColorConnect4Guard: Connect4Guard<'chooseColor'> = (contex
       && isColorAvailable;
 };
 
+export const canStartConnect4Guard: Connect4Guard<'start'> = (context, event) => {
+  const requiredNumberOfPlayers = 2;
+  const playersWhoChoseColor = getPlayersWhoChoseColor(context.players).length;
+
+  return isPlayerInGame(event.playerId, context.players)
+      && playersWhoChoseColor === requiredNumberOfPlayers;
+};
+
 function isPlayerInGame(playerId: number, players: Player[]) {
   return players.some(p => playerId === p.id);
+}
+
+function getPlayersWhoChoseColor(players: Player[]): Player[] {
+  return players.filter(p => p.color);
 }
