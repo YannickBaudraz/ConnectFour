@@ -1,7 +1,7 @@
 import { createModel } from 'xstate/lib/model';
-import { Connect4Grid, Connect4States, Player } from '../types';
-import { joinConnect4Action, leaveConnect4Action } from './actions';
-import { canJoinConnect4Guard, canLeaveConnect4Guard } from './guards';
+import { Connect4Grid, Connect4States, Player, PlayerColor } from '../types';
+import { chooseColorConnect4Action, joinConnect4Action, leaveConnect4Action } from './actions';
+import { canChooseColorConnect4Guard, canJoinConnect4Guard, canLeaveConnect4Guard } from './guards';
 
 export const Connect4Model = createModel({
   players: [] as Player[],
@@ -19,7 +19,7 @@ export const Connect4Model = createModel({
   events: {
     join: (playerId: Player['id'], name: Player['name']) => ({ playerId, name }),
     leave: (playerId: Player['id']) => ({ playerId }),
-    chooseColor: (playerId: Player['id'], color: Player['color']) => ({ playerId, color }),
+    chooseColor: (playerId: Player['id'], color: PlayerColor) => ({ playerId, color }),
     start: (playerId: Player['id']) => ({ playerId }),
     dropPawn: (playerId: Player['id'], row: number) => ({ playerId, row }),
     restart: (playerId: Player['id']) => ({ playerId })
@@ -44,7 +44,9 @@ export const Connect4Machine = Connect4Model.createMachine({
           target: Connect4States.LOBBY
         },
         chooseColor: {
-          target: Connect4States.PLAY
+          cond: canChooseColorConnect4Guard,
+          actions: [ Connect4Model.assign(chooseColorConnect4Action) ],
+          target: Connect4States.LOBBY
         },
         start: {
           target: Connect4States.PLAY
