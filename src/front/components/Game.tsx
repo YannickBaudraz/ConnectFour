@@ -1,13 +1,13 @@
 import Color from 'color';
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { Connect4Grid, PlayerColor } from '../../types';
+import { Grid, PlayerColor } from '../../types';
 import { Disc } from '../styles';
 import { GameInfo } from './GameInfo';
 import { Victory } from './Victory';
 
 type GridProps = {
-  grid: Connect4Grid
+  grid: Grid
   currentColor?: PlayerColor
   onDrop?: (x: number) => void
 }
@@ -58,7 +58,7 @@ const Title = styled.h2`
   text-align: center;
 `;
 
-const GridElement = styled.div<{ grid: Connect4Grid }>`
+const GridElement = styled.div<{ grid: Grid }>`
   --rows: ${props => props.grid.length};
   --cols: ${props => props.grid[0].length};
 

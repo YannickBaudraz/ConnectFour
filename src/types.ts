@@ -1,7 +1,7 @@
 import { ContextFrom, EventFrom } from 'xstate';
-import { Connect4Model } from './machine/Connect4Machine';
+import MachineModel from './state/MachineModel';
 
-export enum Connect4States {
+export enum States {
   LOBBY = 'LOBBY',
   PLAY = 'PLAY',
   VICTORY = 'VICTORY',
@@ -21,19 +21,19 @@ export enum PlayerColor {
 
 export type CellEmpty = 'E';
 export type Cell = PlayerColor.PINK | PlayerColor.GREEN | CellEmpty;
-export type Connect4Grid = Cell[][];
+export type Grid = Cell[][];
 
-export type Connect4Context = ContextFrom<typeof Connect4Model>
+export type Context = ContextFrom<typeof MachineModel>
 
-export type Connect4Events = EventFrom<typeof Connect4Model>
-export type Connect4Event<T extends Connect4Events['type']> = Connect4Events & { type: T }
+export type Events = EventFrom<typeof MachineModel>
+export type Event<T extends Events['type']> = Events & { type: T }
 
-export type Connect4Guard<T extends Connect4Events['type']> = (
-    context: Connect4Context,
-    event: Connect4Event<T>
+export type Guard<T extends Events['type']> = (
+    context: Context,
+    event: Event<T>
 ) => boolean;
 
-export type Connect4Action<T extends Connect4Events['type']> = (
-    context: Connect4Context,
-    event: Connect4Event<T>
-) => Partial<Connect4Context>;
+export type Action<T extends Events['type']> = (
+    context: Context,
+    event: Event<T>
+) => Partial<Context>;

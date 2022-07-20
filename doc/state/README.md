@@ -1,4 +1,4 @@
-# # Machine state
+# # StateMachine state
 
 There are 4 possible states in our game :
 

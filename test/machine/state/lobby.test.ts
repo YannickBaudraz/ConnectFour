@@ -1,11 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { interpret, InterpreterFrom } from 'xstate';
-import { Connect4Machine, Connect4Model } from '../../../src/machine/Connect4Machine';
-import { Connect4States, Player, PlayerColor } from '../../../src/types';
+import MachineModel from '../../../src/state/MachineModel';
+import StateMachine from '../../../src/state/StateMachine';
+import { Player, PlayerColor, States } from '../../../src/types';
 
 describe('lobby', () => {
 
-  let machine: InterpreterFrom<typeof Connect4Machine>;
+  let machine: InterpreterFrom<typeof StateMachine>;
 
   const player1 = { id: 1, name: 'player1' };
   const player2 = { id: 2, name: 'player2' };
@@ -14,7 +15,7 @@ describe('lobby', () => {
   const GREEN = PlayerColor.GREEN;
 
   beforeEach(() => {
-    machine = interpret(Connect4Machine).start();
+    machine = interpret(StateMachine).start();
   });
 
   describe('on join', () => {
@@ -140,7 +141,7 @@ describe('lobby', () => {
 
       expect(machineState.changed).toBeTruthy();
       expect(machineState.context.currentPlayer).toEqual(expectedCurrentPlayer);
-      expect(machine.state.value).toBe(Connect4States.PLAY);
+      expect(machine.state.value).toBe(States.PLAY);
     });
 
     it('should not allow a player to start the game if he\'s not in the game', () => {
@@ -162,22 +163,22 @@ describe('lobby', () => {
   });
 
   function makePlayerJoin(playerId: Player['id'], name: Player['name']) {
-    const joinEvent = Connect4Model.events.join(playerId, name);
+    const joinEvent = MachineModel.events.join(playerId, name);
     return machine.send(joinEvent);
   }
 
   function makePlayerLeave(playerId: Player['id']) {
-    const leaveEvent = Connect4Model.events.leave(playerId);
+    const leaveEvent = MachineModel.events.leave(playerId);
     return machine.send(leaveEvent);
   }
 
   function makePlayerChooseColor(playerId: Player['id'], color: PlayerColor) {
-    const chooseColorEvent = Connect4Model.events.chooseColor(playerId, color);
+    const chooseColorEvent = MachineModel.events.chooseColor(playerId, color);
     return machine.send(chooseColorEvent);
   }
 
   function makePlayerStart(playerId: Player['id']) {
-    const startEvent = Connect4Model.events.start(playerId);
+    const startEvent = MachineModel.events.start(playerId);
     return machine.send(startEvent);
   }
 
