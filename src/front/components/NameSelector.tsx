@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { Alert, AlertClose, Button, Input } from '../styles';
@@ -15,12 +15,18 @@ export function NameSelector({ onSelect, disabled }: NameSelectorProps) {
     e.preventDefault();
 
     const name = new FormData(e.currentTarget).get('name');
+
     if (!name || name.toString().trim() === '') {
       setHasError(true);
+      e.currentTarget.reset();
       return;
     }
+
+    setHasError(false);
     onSelect(name.toString());
   }
+
+  const alertRef = React.useRef(null);
 
   return (
       <article>
@@ -30,9 +36,11 @@ export function NameSelector({ onSelect, disabled }: NameSelectorProps) {
             in={hasError}
             timeout={300}
             classNames="element"
+            mountOnEnter
             unmountOnExit
+            nodeRef={alertRef}
         >
-          <Alert>
+          <Alert ref={alertRef}>
             Choisis un pseudo !
             <AlertClose onClick={() => setHasError(false)}>
               &times;
