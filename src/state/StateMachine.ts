@@ -4,7 +4,7 @@ import {canChooseColor, canDropPawn, canJoin, canLeave, canStart, isWiningMove} 
 import MachineModel from './MachineModel';
 
 const StateMachine = MachineModel.createMachine({
-  id: 'idle',
+  id: 'connect_four',
   context: MachineModel.initialContext,
   initial: State.LOBBY,
   states: {
