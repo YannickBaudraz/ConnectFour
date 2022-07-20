@@ -1,6 +1,6 @@
-import Color from 'color';
 import styled from 'styled-components';
 import { Player, PlayerColor } from '../../types';
+import { Disc } from '../styles';
 
 type ColorSelectorProps = {
   onSelect: (color: PlayerColor) => void;
@@ -10,14 +10,18 @@ type ColorSelectorProps = {
 
 export function ColorSelector({ onSelect, players, colors }: ColorSelectorProps) {
   return (
-      <>
+      <article>
         <Players>
           {players.map(player =>
-              <PlayerComponent
-                  key={player.id}>
+              <PlayerElement
+                  key={player.id}
+              >
                 {player.name}
-                {player.color && <Disc color={player.color}/>}
-              </PlayerComponent>
+                {player.color &&
+                    <Disc diameter={1.5}
+                          color={player.color}
+                    />}
+              </PlayerElement>
           )}
         </Players>
         <h3>Sélectionne une couleur</h3>
@@ -27,11 +31,13 @@ export function ColorSelector({ onSelect, players, colors }: ColorSelectorProps)
                   as="button"
                   key={color}
                   onClick={() => onSelect(color)}
+                  diameter={1.5}
                   color={color}
+                  aria-label={`Sélectionner la couleur ${color}`}
               />
           )}
         </Buttons>
-      </>
+      </article>
   );
 }
 
@@ -41,20 +47,10 @@ const Players = styled.div`
   gap: 1rem;
 `;
 
-const PlayerComponent = styled.div`
+const PlayerElement = styled.div`
   display: flex;
   align-items: center;
   gap: .2rem;
-`;
-
-const Disc = styled.div`
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 100%;
-  background-color: ${props => props.color || 'black'};
-  box-shadow: inset 0 0 0 3px ${props => props.color && Color(props.color).darken(0.3).hex() || 'white'};
-  border: solid 3px ${props => props.color || 'black'};
-  outline: solid 1px ${props => props.color && Color(props.color).darken(0.3).hex() || 'white'};
 `;
 
 const Buttons = styled.div`

@@ -1,49 +1,60 @@
 import { FormEvent, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import styled from 'styled-components';
+import { Alert, AlertClose, Button, Input } from '../styles';
 
 type NameSelectorProps = {
   onSelect: (name: string) => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
-NameSelector.defaultProps = {
-  disabled: false
-};
-
 export function NameSelector({ onSelect, disabled }: NameSelectorProps) {
-  const [ error, setError ] = useState<string>('');
+  const [ hasError, setHasError ] = useState<boolean>(false);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const name = new FormData(e.currentTarget).get('name');
     if (!name || name.toString().trim() === '') {
-      setError('Choisis un pseudo !');
+      setHasError(true);
       return;
     }
     onSelect(name.toString());
   }
 
   return (
-      <>
-        <h1>Choisis un pseudo</h1>
+      <article>
+        <h2>Choisis un pseudo</h2>
 
-        {error && <div className="alert">
-          {error}
-          <button className="alert__close"
-                  onClick={() => setError('')}>
-            &times;
-          </button>
-        </div>}
+        <CSSTransition
+            in={hasError}
+            timeout={300}
+            classNames="element"
+            unmountOnExit
+        >
+          <Alert>
+            Choisis un pseudo !
+            <AlertClose onClick={() => setHasError(false)}>
+              &times;
+            </AlertClose>
+          </Alert>
+        </CSSTransition>
 
-        <form action="" onSubmit={handleSubmit}>
-          <label htmlFor="name">Ton pseudo</label>
-          <input type="text" id="name" name="name" required/>
+        <Form action="src/front/components/NameSelector" onSubmit={handleSubmit}>
+          <label htmlFor="name">Ton pseudo &rarr;</label>
+          <Input type="text" id="name" name="name"/>
 
-          <button type="submit"
+          <Button type="submit"
                   disabled={disabled}>
             Enregistrer
-          </button>
-        </form>
-      </>
+          </Button>
+        </Form>
+      </article>
   );
 }
+
+const Form = styled.form`
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+`;

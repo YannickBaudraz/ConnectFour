@@ -25,6 +25,14 @@ The goal of this project is to create a `Connect 4` game, where 2 players can ch
 - [Vite](https://vite.net/)
 - [Vitest](https://vitest.dev/)
 
+### Libraries
+
+##### Front
+
+- [Color](https://www.npmjs.com/package/color)
+- [React Transition Group](https://reactcommunity.org/react-transition-group/)
+- [Styled Components](https://styled-components.com/)
+
 ## Technological choices
 
 ### TypeScript
@@ -46,6 +54,28 @@ To create this machine I use `Xstate` which offers very good `TypeScript` suppor
 
 For the front end I use a library that will update the view according to the state of the game. I could use any
 library here, but I chose `React` because it is the most popular.
+
+### Colors library
+
+`Color`
+
+The `Color` library is a great library to use when you want to use programmatically colors in your application. It
+offers a lot of color functionality, especially when you want to have a ton of a color - lighten or darken for example.
+
+#### CSS transitions
+
+`React Transition Group`
+
+It exposes simple components for defining entering and exiting transitions. It's useful when you just want to have a
+smooth transition when a component enter or exit the DOM, lite an alert.
+
+#### Styled Components
+
+`Styled Components`
+
+When using a front-end library, I like to create components to make the code more readable. But sometimes, components
+don't have logic, they are just styled elements. For a game, that's what often happens and this library is perfect
+fot that.
 
 ### NodeJS & WebSocket
 
