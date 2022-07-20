@@ -1,6 +1,6 @@
 import Color from 'color';
 import styled from 'styled-components';
-import { PlayerColor } from '../../types';
+import {PlayerColor} from '../../types';
 
 export const Button = styled.button`
   background-image: linear-gradient(to right,

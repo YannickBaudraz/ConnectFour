@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { Player } from '../../types';
-import { Disc } from '../styles';
+import {Player} from '../../types';
+import {Disc} from '../styles';
 
 type GameInfoProps = {
   player: Player
 }
 
-export function GameInfo({ player }: GameInfoProps) {
+export function GameInfo({player}: GameInfoProps) {
   return (
       <section>
         <Title>

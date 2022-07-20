@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Player } from '../../types';
-import { Button, Disc } from '../styles';
+import {Player} from '../../types';
+import {Button, Disc} from '../styles';
 
 type VictoryProps = {
   player: Player,
   onRestart?: () => void
 }
 
-export function Victory({ player, onRestart }: VictoryProps) {
+export function Victory({player, onRestart}: VictoryProps) {
   function handleRestart(event: React.MouseEvent) {
     event.preventDefault();
     onRestart?.();

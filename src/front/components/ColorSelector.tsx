@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Player, PlayerColor } from '../../types';
-import { Disc } from '../styles';
+import {Player, PlayerColor} from '../../types';
+import {Disc} from '../styles';
 
 type ColorSelectorProps = {
   onSelect: (color: PlayerColor) => void;
@@ -8,7 +8,7 @@ type ColorSelectorProps = {
   colors: PlayerColor[],
 }
 
-export function ColorSelector({ onSelect, players, colors }: ColorSelectorProps) {
+export function ColorSelector({onSelect, players, colors}: ColorSelectorProps) {
   return (
       <article>
         <Players>

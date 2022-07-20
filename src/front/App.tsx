@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { PlayerColor } from '../types';
-import { ColorSelector } from './components/ColorSelector';
-import { Game } from './components/Game';
-import { NameSelector } from './components/NameSelector';
+import {PlayerColor} from '../types';
+import {ColorSelector} from './components/ColorSelector';
+import {Game} from './components/Game';
+import {NameSelector} from './components/NameSelector';
 
 function App() {
   return (
@@ -16,8 +16,8 @@ function App() {
         <ColorSelector
             onSelect={() => null}
             players={[
-              { id: 1, name: 'John', color: PlayerColor.PINK },
-              { id: 2, name: 'Jane', color: PlayerColor.GREEN }
+              {id: 1, name: 'John', color: PlayerColor.PINK},
+              {id: 2, name: 'Jane', color: PlayerColor.GREEN}
             ]} colors={Object.values(PlayerColor)}
         />
 
@@ -27,12 +27,12 @@ function App() {
             currentColor={PlayerColor.GREEN}
             onDrop={console.log}
             grid={[
-              [ 'E', 'E', 'E', 'E', 'E', 'E', 'E' ],
-              [ 'E', 'E', 'E', 'E', 'E', 'E', 'E' ],
-              [ 'E', 'E', 'E', 'E', 'E', 'E', 'E' ],
-              [ 'E', PlayerColor.PINK, 'E', 'E', 'E', 'E', 'E' ],
-              [ 'E', PlayerColor.PINK, 'E', 'E', 'E', 'E', 'E' ],
-              [ 'E', PlayerColor.PINK, 'E', 'E', PlayerColor.GREEN, 'E', PlayerColor.GREEN ]
+              ['E', 'E', 'E', 'E', 'E', 'E', 'E'],
+              ['E', 'E', 'E', 'E', 'E', 'E', 'E'],
+              ['E', 'E', 'E', 'E', 'E', 'E', 'E'],
+              ['E', PlayerColor.PINK, 'E', 'E', 'E', 'E', 'E'],
+              ['E', PlayerColor.PINK, 'E', 'E', 'E', 'E', 'E'],
+              ['E', PlayerColor.PINK, 'E', 'E', PlayerColor.GREEN, 'E', PlayerColor.GREEN]
             ]}
         />
       </Container>

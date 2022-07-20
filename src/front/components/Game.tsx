@@ -1,10 +1,10 @@
 import Color from 'color';
 import React from 'react';
-import styled, { css, keyframes } from 'styled-components';
-import { Grid, PlayerColor } from '../../types';
-import { Disc } from '../styles';
-import { GameInfo } from './GameInfo';
-import { Victory } from './Victory';
+import styled, {css, keyframes} from 'styled-components';
+import {Grid, PlayerColor} from '../../types';
+import {Disc} from '../styles';
+import {GameInfo} from './GameInfo';
+import {Victory} from './Victory';
 
 type GridProps = {
   grid: Grid
@@ -12,7 +12,7 @@ type GridProps = {
   onDrop?: (x: number) => void
 }
 
-export function Game({ grid, currentColor, onDrop }: GridProps) {
+export function Game({grid, currentColor, onDrop}: GridProps) {
   function handleDrop(x: number, event: React.MouseEvent) {
     event.preventDefault();
     onDrop?.(x);
@@ -24,9 +24,9 @@ export function Game({ grid, currentColor, onDrop }: GridProps) {
           Connect Four
         </Title>
 
-        <GameInfo player={{ id: 2, name: 'Laurine', color: PlayerColor.PINK }}/>
+        <GameInfo player={{id: 2, name: 'Laurine', color: PlayerColor.PINK}}/>
 
-        <Victory player={{ id: 2, name: 'Laurine', color: PlayerColor.PINK }}/>
+        <Victory player={{id: 2, name: 'Laurine', color: PlayerColor.PINK}}/>
 
         <GridElement grid={grid}>
           {grid.map((row, y) => row.map((color, x) =>

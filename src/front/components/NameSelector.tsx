@@ -1,15 +1,15 @@
-import React, { FormEvent, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import React, {FormEvent, useState} from 'react';
+import {CSSTransition} from 'react-transition-group';
 import styled from 'styled-components';
-import { Alert, AlertClose, Button, Input } from '../styles';
+import {Alert, AlertClose, Button, Input} from '../styles';
 
 type NameSelectorProps = {
   onSelect: (name: string) => void;
   disabled?: boolean;
 }
 
-export function NameSelector({ onSelect, disabled }: NameSelectorProps) {
-  const [ hasError, setHasError ] = useState<boolean>(false);
+export function NameSelector({onSelect, disabled}: NameSelectorProps) {
+  const [hasError, setHasError] = useState<boolean>(false);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
