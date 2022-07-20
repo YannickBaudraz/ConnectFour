@@ -7,7 +7,7 @@ import { NameSelector } from './components/NameSelector';
 function App() {
   return (
       <Container className="container">
-        <MainTitle>Connect 4 - THE game</MainTitle>
+        <MainTitle>Connect Four - THE game</MainTitle>
 
         <NameSelector onSelect={() => null}/>
 

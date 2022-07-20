@@ -21,7 +21,7 @@ export function Game({ grid, currentColor, onDrop }: GridProps) {
   return (
       <article>
         <Title>
-          Connect 4
+          Connect Four
         </Title>
 
         <GameInfo player={{ id: 2, name: 'Laurine', color: PlayerColor.PINK }}/>

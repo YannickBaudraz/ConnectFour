@@ -1,5 +1,5 @@
 {
-  "name": "connect4",
+  "name": "connect-four",
   "private": true,
   "version": "0.0.0",
   "type": "module",
