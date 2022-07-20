@@ -1,15 +1,15 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-import { interpret, InterpreterFrom } from 'xstate';
+import {beforeEach, describe, expect, it} from 'vitest';
+import {interpret, InterpreterFrom} from 'xstate';
 import MachineModel from '../../../src/state/MachineModel';
 import StateMachine from '../../../src/state/StateMachine';
-import { Player, PlayerColor, States } from '../../../src/types';
+import {Player, PlayerColor, State} from '../../../src/types';
 
 describe('lobby', () => {
 
   let machine: InterpreterFrom<typeof StateMachine>;
 
-  const player1 = { id: 1, name: 'player1' };
-  const player2 = { id: 2, name: 'player2' };
+  const player1 = {id: 1, name: 'player1'};
+  const player2 = {id: 2, name: 'player2'};
 
   const PINK = PlayerColor.PINK;
   const GREEN = PlayerColor.GREEN;
@@ -141,7 +141,7 @@ describe('lobby', () => {
 
       expect(machineState.changed).toBeTruthy();
       expect(machineState.context.currentPlayer).toEqual(expectedCurrentPlayer);
-      expect(machine.state.value).toBe(States.PLAY);
+      expect(machine.state.value).toBe(State.PLAY);
     });
 
     it('should not allow a player to start the game if he\'s not in the game', () => {

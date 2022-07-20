@@ -1,55 +1,64 @@
-import { States } from '../types';
-import { chooseColor, join, leave, start } from './actions';
-import { canChooseColor, canJoin, canLeave, canStart } from './guards';
+import {State} from '../types';
+import {chooseColor, dropPawn, join, leave, saveWiningLine, start, switchPlayers} from './actions';
+import {canChooseColor, canDropPawn, canJoin, canLeave, canStart, isWiningMove} from './guards';
 import MachineModel from './MachineModel';
 
 const StateMachine = MachineModel.createMachine({
   id: 'idle',
   context: MachineModel.initialContext,
-  initial: States.LOBBY,
+  initial: State.LOBBY,
   states: {
-    [States.LOBBY]: {
+    [State.LOBBY]: {
       on: {
         join: {
           cond: canJoin,
-          actions: [ MachineModel.assign(join) ],
-          target: States.LOBBY
+          actions: [MachineModel.assign(join)],
+          target: State.LOBBY
         },
         leave: {
           cond: canLeave,
-          actions: [ MachineModel.assign(leave) ],
-          target: States.LOBBY
+          actions: [MachineModel.assign(leave)],
+          target: State.LOBBY
         },
         chooseColor: {
           cond: canChooseColor,
-          actions: [ MachineModel.assign(chooseColor) ],
-          target: States.LOBBY
+          actions: [MachineModel.assign(chooseColor)],
+          target: State.LOBBY
         },
         start: {
           cond: canStart,
-          actions: [ MachineModel.assign(start) ],
-          target: States.PLAY
+          actions: [MachineModel.assign(start)],
+          target: State.PLAY
         }
       }
     },
-    [States.PLAY]: {
+    [State.PLAY]: {
       on: {
-        dropPawn: {
-          target: States.PLAY
-        }
+        dropPawn: [
+          {
+            cond: isWiningMove,
+            actions: [MachineModel.assign(saveWiningLine), MachineModel.assign(dropPawn)],
+            target: State.VICTORY
+          },
+          {
+            cond: canDropPawn,
+            actions: [MachineModel.assign(dropPawn), MachineModel.assign(switchPlayers)],
+            target: State.PLAY
+          }
+        ]
       }
     },
-    [States.VICTORY]: {
+    [State.VICTORY]: {
       on: {
         restart: {
-          target: States.LOBBY
+          target: State.LOBBY
         }
       }
     },
-    [States.DRAW]: {
+    [State.DRAW]: {
       on: {
         restart: {
-          target: States.LOBBY
+          target: State.LOBBY
         }
       }
     }

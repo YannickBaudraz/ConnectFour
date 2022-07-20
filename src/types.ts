@@ -1,7 +1,7 @@
-import { ContextFrom, EventFrom } from 'xstate';
+import {ContextFrom, EventFrom} from 'xstate';
 import MachineModel from './state/MachineModel';
 
-export enum States {
+export enum State {
   LOBBY = 'LOBBY',
   PLAY = 'PLAY',
   VICTORY = 'VICTORY',
@@ -21,7 +21,9 @@ export enum PlayerColor {
 
 export type CellEmpty = 'E';
 export type Cell = PlayerColor.PINK | PlayerColor.GREEN | CellEmpty;
-export type Grid = Cell[][];
+export type Row = Cell[];
+export type Grid = Row[];
+export type Position = { x: number; y: number };
 
 export type Context = ContextFrom<typeof MachineModel>
 
