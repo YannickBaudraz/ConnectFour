@@ -8,6 +8,7 @@ import {
   fakeGridForDiagonalBackwardUpLine,
   fakeGridForDiagonalForwardDownLine,
   fakeGridForDiagonalForwardUpLine,
+  fakeGridForDraw,
   fakeGridForVerticalLine,
   makeFakeContext,
   makeFakeMachine
@@ -104,6 +105,17 @@ describe('play', () => {
 
     expect(machineState.context.grid[2][4]).toBe(player1.color);
     expectVictory(machineState, context);
+  });
+
+  it('should allow a draw', () => {
+    machine.state.context.grid = fakeGridForDraw;
+    const event = MachineModel.events.dropPawn(player1.id, 0);
+
+    const machineState = machine.send(event);
+
+    expect(machineState.context.grid[0][0]).toBe(player1.color);
+    expect(machineState.changed).toBeTruthy();
+    expect(machineState.value).toBe(State.DRAW);
   });
 
   it('should not allow a player to drop a pawn when a column is full', () => {

@@ -1,4 +1,4 @@
-import {Guard, Player, Position} from '../types';
+import {Cell, Guard, Player, Position} from '../types';
 import {getFreePositionY} from './helpers';
 import {getFirstWinningLine} from './win';
 
@@ -47,4 +47,11 @@ export const isWiningMove: Guard<'dropPawn'> = (context, event) => {
   const firstWinningLine = getFirstWinningLine(grid, position, colorDropped, lengthToWin);
 
   return canDropPawn(context, event) && firstWinningLine.length === lengthToWin;
+};
+
+export const isLastPawnDropped: Guard<'dropPawn'> = (context) => {
+  const emptyCell = (cell: Cell) => cell === 'E';
+  const accumulateEmptyCell = (acc: number, row: Cell[]) => acc + row.filter(emptyCell).length;
+
+  return context.grid.reduce(accumulateEmptyCell, 0) <= 1;
 };

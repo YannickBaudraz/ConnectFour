@@ -9,7 +9,15 @@ import {
   start,
   switchPlayers
 } from './actions';
-import {canChooseColor, canDropPawn, canJoin, canLeave, canStart, isWiningMove} from './guards';
+import {
+  canChooseColor,
+  canDropPawn,
+  canJoin,
+  canLeave,
+  canStart,
+  isLastPawnDropped,
+  isWiningMove
+} from './guards';
 import MachineModel from './MachineModel';
 
 const StateMachine = MachineModel.createMachine({
@@ -43,18 +51,19 @@ const StateMachine = MachineModel.createMachine({
     },
     [State.PLAY]: {
       on: {
-        dropPawn: [
-          {
-            cond: isWiningMove,
-            actions: [MachineModel.assign(saveWiningLine), MachineModel.assign(dropPawn)],
-            target: State.VICTORY
-          },
-          {
-            cond: canDropPawn,
-            actions: [MachineModel.assign(dropPawn), MachineModel.assign(switchPlayers)],
-            target: State.PLAY
-          }
-        ]
+        dropPawn: [{
+          cond: isLastPawnDropped,
+          actions: [MachineModel.assign(dropPawn)],
+          target: State.DRAW
+        }, {
+          cond: isWiningMove,
+          actions: [MachineModel.assign(saveWiningLine), MachineModel.assign(dropPawn)],
+          target: State.VICTORY
+        }, {
+          cond: canDropPawn,
+          actions: [MachineModel.assign(dropPawn), MachineModel.assign(switchPlayers)],
+          target: State.PLAY
+        }]
       }
     },
     [State.VICTORY]: {

@@ -78,3 +78,12 @@ export const fakeGridForDiagonalBackwardDownLine: Grid = [
   ['E', 'E', PlayerColor.GREEN, 'E', PlayerColor.PINK, 'E', 'E'],
   ['E', PlayerColor.GREEN, 'E', 'E', PlayerColor.PINK, 'E', 'E']
 ];
+
+export const fakeGridForDraw: Grid = [
+  ['E', PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK],
+  [PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN],
+  [PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK],
+  [PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK],
+  [PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN],
+  [PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN, PlayerColor.PINK, PlayerColor.GREEN]
+];
