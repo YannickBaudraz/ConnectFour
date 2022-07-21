@@ -1,6 +1,6 @@
 import {Guard, Player, Position} from '../types';
 import {getFreePositionY} from './helpers';
-import {getFirstWinningLine} from "./win";
+import {getFirstWinningLine} from './win';
 
 export const canJoin: Guard<'join'> = (context, event) => {
   const maxPlayerCount = 2;
@@ -33,7 +33,7 @@ export const canStart: Guard<'start'> = (context, event) => {
 };
 
 export const canDropPawn: Guard<'dropPawn'> = (context, {xPos, playerId}) => {
-  const isInsideRow = xPos >= 0 && xPos < context.grid[0].length
+  const isInsideRow = xPos >= 0 && xPos < context.grid[0].length;
   const isCurrentPlayer = context.currentPlayer?.id === playerId;
   const isPositionYFree = getFreePositionY(context.grid, xPos) >= 0;
 
@@ -41,10 +41,10 @@ export const canDropPawn: Guard<'dropPawn'> = (context, {xPos, playerId}) => {
 };
 
 export const isWiningMove: Guard<'dropPawn'> = (context, event) => {
-  const {lengthToWin, grid, currentPlayer} = context
+  const {lengthToWin, grid, currentPlayer} = context;
   const position: Position = {x: event.xPos, y: getFreePositionY(grid, event.xPos)};
   const colorDropped = currentPlayer!.color!;
   const firstWinningLine = getFirstWinningLine(grid, position, colorDropped, lengthToWin);
 
   return canDropPawn(context, event) && firstWinningLine.length === lengthToWin;
-}
+};

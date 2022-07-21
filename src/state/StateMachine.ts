@@ -1,5 +1,14 @@
 import {State} from '../types';
-import {chooseColor, dropPawn, join, leave, saveWiningLine, start, switchPlayers} from './actions';
+import {
+  chooseColor,
+  dropPawn,
+  join,
+  leave,
+  restart,
+  saveWiningLine,
+  start,
+  switchPlayers
+} from './actions';
 import {canChooseColor, canDropPawn, canJoin, canLeave, canStart, isWiningMove} from './guards';
 import MachineModel from './MachineModel';
 
@@ -51,6 +60,7 @@ const StateMachine = MachineModel.createMachine({
     [State.VICTORY]: {
       on: {
         restart: {
+          actions: [MachineModel.assign(restart)],
           target: State.LOBBY
         }
       }
@@ -58,6 +68,7 @@ const StateMachine = MachineModel.createMachine({
     [State.DRAW]: {
       on: {
         restart: {
+          actions: [MachineModel.assign(restart)],
           target: State.LOBBY
         }
       }

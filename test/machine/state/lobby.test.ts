@@ -25,7 +25,7 @@ describe('lobby', () => {
       const machineState = makePlayerJoin(player1.id, 'player1');
 
       expect(machineState.changed).toBeTruthy();
-      expect(machineState.context.players).toEqual([ player1 ]);
+      expect(machineState.context.players).toEqual([player1]);
     });
 
     it('should allow a player to join if there are only one player', () => {
@@ -34,7 +34,7 @@ describe('lobby', () => {
       const machineState = makePlayerJoin(player2.id, 'player2');
 
       expect(machineState.changed).toBeTruthy();
-      expect(machineState.context.players).toEqual([ player1, player2 ]);
+      expect(machineState.context.players).toEqual([player1, player2]);
     });
 
     it('should not allow a player to join twice', () => {
@@ -64,7 +64,7 @@ describe('lobby', () => {
       const machineState = makePlayerLeave(player1.id);
 
       expect(machineState.changed).toBeTruthy();
-      expect(machineState.context.players).toEqual([ player2 ]);
+      expect(machineState.context.players).toEqual([player2]);
     });
 
     it('should not allow a player to leave if he\'s not in the game', () => {
@@ -83,7 +83,7 @@ describe('lobby', () => {
       const machineState = makePlayerChooseColor(player1.id, PINK);
 
       expect(machineState.changed).toBeTruthy();
-      expect(machineState.context.players).toEqual([ getPlayerWithColor(player1.id, PINK) ]);
+      expect(machineState.context.players).toEqual([getPlayerWithColor(player1.id, PINK)]);
     });
 
     it('should allow the second player to choose a difference color than the first player', () => {
@@ -107,7 +107,7 @@ describe('lobby', () => {
       const machineState = makePlayerChooseColor(player1.id, GREEN);
 
       expect(machineState.changed).toBeTruthy();
-      expect(machineState.context.players).toEqual([ getPlayerWithColor(player1.id, GREEN) ]);
+      expect(machineState.context.players).toEqual([getPlayerWithColor(player1.id, GREEN)]);
     });
 
     it('should not allow a player to choose a color if he\'s not in the game', () => {
@@ -183,6 +183,6 @@ describe('lobby', () => {
   }
 
   function getPlayerWithColor(playerId: Player['id'], color: PlayerColor) {
-    return playerId === 1 ? { ...player1, color } : { ...player2, color };
+    return playerId === 1 ? {...player1, color} : {...player2, color};
   }
 });

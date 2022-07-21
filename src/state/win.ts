@@ -31,7 +31,7 @@ const authorizedDirections = [
   {x: 1, y: -1}
 ];
 
-const forwardAndBackward = [1, -1]
+const forwardAndBackward = [1, -1];
 
 function getNextPosition(currentPosition: Position, delta: number, direction: Position): Position {
   return {

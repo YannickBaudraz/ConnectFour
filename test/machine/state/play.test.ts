@@ -44,7 +44,7 @@ describe('play', () => {
 
     expect(machineState.context.grid[5][1]).toBe(player2.color);
     expectVictory(machineState, context);
-  })
+  });
 
   it('should let a player win with an horizontal backward line', () => {
     machine.machine.context.currentPlayer = player2;
@@ -54,7 +54,7 @@ describe('play', () => {
 
     expect(machineState.context.grid[5][5]).toBe(player2.color);
     expectVictory(machineState, context);
-  })
+  });
 
   it('should let a player win with a vertical forward line', () => {
     machine.state.context.grid = fakeGridForVerticalLine;

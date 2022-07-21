@@ -1,6 +1,7 @@
 import {Action, Cell, Row} from '../types';
 import {getFreePositionY} from './helpers';
-import {getFirstWinningLine} from "./win";
+import {getFirstWinningLine} from './win';
+import MachineModel from './MachineModel';
 
 export const join: Action<'join'> = (context, event) => ({
   players: [...context.players, {id: event.playerId, name: event.name}]
@@ -47,3 +48,5 @@ export const saveWiningLine: Action<'dropPawn'> = (context, event) => ({
       context.lengthToWin
   )
 });
+
+export const restart: Action<'restart'> = () => MachineModel.initialContext;

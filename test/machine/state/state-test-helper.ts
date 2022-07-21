@@ -59,7 +59,7 @@ export const fakeGridForDiagonalForwardDownLine: Grid = [
   ['E', PlayerColor.PINK, PlayerColor.GREEN, 'E', 'E', 'E', 'E'],
   ['E', PlayerColor.PINK, 'E', PlayerColor.GREEN, 'E', 'E', 'E'],
   ['E', PlayerColor.PINK, 'E', 'E', PlayerColor.GREEN, 'E', 'E']
-]
+];
 
 export const fakeGridForDiagonalBackwardUpLine: Grid = [
   ['E', 'E', 'E', 'E', 'E', 'E', 'E'],
