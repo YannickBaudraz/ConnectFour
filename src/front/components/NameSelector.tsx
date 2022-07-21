@@ -24,6 +24,7 @@ export function NameSelector({onSelect, disabled}: NameSelectorProps) {
 
     setHasError(false);
     onSelect(name.toString());
+    e.currentTarget.reset();
   }
 
   const alertRef = React.useRef(null);

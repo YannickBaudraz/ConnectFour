@@ -6,9 +6,8 @@ html, body {
   font-family: 'Helvetica', 'Open Sans', sans-serif;
 }
 
-.container {
-  max-width: 960px;
-  margin: 0 auto;
+button {
+  cursor: pointer;
 }
 
 .element-enter {

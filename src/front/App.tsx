@@ -1,40 +1,16 @@
 import styled from 'styled-components';
-import {PlayerColor} from '../types';
-import {ColorSelector} from './components/ColorSelector';
-import {Game} from './components/Game';
-import {NameSelector} from './components/NameSelector';
+import {useGame} from './hooks/useGame';
+import {State} from '../types';
+import {Lobby} from './screens/Lobby';
 
 function App() {
+  const {state} = useGame();
+
   return (
-      <Container className="container">
-        <MainTitle>Connect Four - THE game</MainTitle>
+      <Container>
+        <MainTitle>Puissance 4 - LE jeu</MainTitle>
 
-        <NameSelector onSelect={() => null}/>
-
-        <hr/>
-
-        <ColorSelector
-            onSelect={() => null}
-            players={[
-              {id: 1, name: 'John', color: PlayerColor.PINK},
-              {id: 2, name: 'Jane', color: PlayerColor.GREEN}
-            ]} colors={Object.values(PlayerColor)}
-        />
-
-        <hr/>
-
-        <Game
-            currentColor={PlayerColor.GREEN}
-            onDrop={console.log}
-            grid={[
-              ['E', 'E', 'E', 'E', 'E', 'E', 'E'],
-              ['E', 'E', 'E', 'E', 'E', 'E', 'E'],
-              ['E', 'E', 'E', 'E', 'E', 'E', 'E'],
-              ['E', PlayerColor.PINK, 'E', 'E', 'E', 'E', 'E'],
-              ['E', PlayerColor.PINK, 'E', 'E', 'E', 'E', 'E'],
-              ['E', PlayerColor.PINK, 'E', 'E', PlayerColor.GREEN, 'E', PlayerColor.GREEN]
-            ]}
-        />
+        {state === State.LOBBY && <Lobby/>}
       </Container>
   );
 }
