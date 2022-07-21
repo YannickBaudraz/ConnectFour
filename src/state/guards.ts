@@ -46,7 +46,7 @@ export const isWiningMove: Guard<'dropPawn'> = (context, event) => {
   const colorDropped = currentPlayer!.color!;
   const firstWinningLine = getFirstWinningLine(grid, position, colorDropped, lengthToWin);
 
-  return canDropPawn(context, event) && firstWinningLine.length === lengthToWin;
+  return canDropPawn(context, event) && !!firstWinningLine.length;
 };
 
 export const isLastPawnDropped: Guard<'dropPawn'> = (context) => {

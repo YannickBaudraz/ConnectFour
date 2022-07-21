@@ -3,8 +3,6 @@ import React from 'react';
 import styled, {css, keyframes} from 'styled-components';
 import {Grid, PlayerColor} from '../../types';
 import {Disc} from '../styles';
-import {GameInfo} from './GameInfo';
-import {Victory} from './Victory';
 
 type GridProps = {
   grid: Grid
@@ -21,12 +19,8 @@ export function Game({grid, currentColor, onDrop}: GridProps) {
   return (
       <article>
         <Title>
-          Connect Four
+          Grille de jeu
         </Title>
-
-        <GameInfo player={{id: 2, name: 'Laurine', color: PlayerColor.PINK}}/>
-
-        <Victory player={{id: 2, name: 'Laurine', color: PlayerColor.PINK}}/>
 
         <GridElement grid={grid}>
           {grid.map((row, y) => row.map((color, x) =>

@@ -9,15 +9,15 @@ export function getFirstWinningLine(
   for (const direction of authorizedDirections) {
     const winingLine: Position[] = [position];
 
-    for (let positiveDelta = 1; positiveDelta < lengthToWin; positiveDelta++) {
-      for (let way of forwardAndBackward) {
+    for (let way of forwardAndBackward) {
+      for (let positiveDelta = 1; positiveDelta < lengthToWin; positiveDelta++) {
         const nextLookingPosition = getNextPosition(position, positiveDelta * way, direction);
-        if (isPositionIsColorDropped(grid, nextLookingPosition, colorDropped))
-          winingLine.push(nextLookingPosition);
+        if (!IsColorDropped(grid, nextLookingPosition, colorDropped)) break;
+        winingLine.push(nextLookingPosition);
       }
     }
 
-    if (winingLine.length === lengthToWin)
+    if (winingLine.length >= lengthToWin)
       return winingLine;
   }
 
@@ -40,6 +40,6 @@ function getNextPosition(currentPosition: Position, delta: number, direction: Po
   };
 }
 
-function isPositionIsColorDropped(grid: Grid, position: Position, color: PlayerColor): boolean {
+function IsColorDropped(grid: Grid, position: Position, color: PlayerColor): boolean {
   return grid?.[position.y]?.[position.x] === color;
 }

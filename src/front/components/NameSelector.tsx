@@ -14,7 +14,7 @@ export function NameSelector({onSelect, disabled}: NameSelectorProps) {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const name = new FormData(e.currentTarget).get('name');
+    const name = new FormData(e.currentTarget).get('pseudo');
 
     if (!name || name.toString().trim() === '') {
       setHasError(true);
@@ -51,7 +51,7 @@ export function NameSelector({onSelect, disabled}: NameSelectorProps) {
 
         <Form action="src/front/components/NameSelector" onSubmit={handleSubmit}>
           <label htmlFor="name">Ton pseudo &rarr;</label>
-          <Input type="text" id="name" name="name"/>
+          <Input type="text" id="name" name="pseudo"/>
 
           <Button type="submit"
                   disabled={disabled}>

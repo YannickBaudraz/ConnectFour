@@ -12,18 +12,35 @@ export function Lobby({}: LobbyProps) {
 
   return (
       <section>
-        <NameSelector onSelect={join}/>
+        <CSSTransition
+            in={context.players.length < 2}
+            timeout={300}
+            classNames="element"
+            mountOnEnter
+            unmountOnExit
+        >
+          <NameSelector onSelect={join}/>
+        </CSSTransition>
 
-        <ColorSelector onSelect={chooseColor}
-                       players={context.players}
-                       colors={Object.values(PlayerColor)}
-        />
+        <CSSTransition
+            in={!!context.players.length}
+            timeout={300}
+            classNames="element"
+            mountOnEnter
+            unmountOnExit
+        >
+          <ColorSelector onSelect={chooseColor}
+                         players={context.players}
+                         colors={Object.values(PlayerColor)}
+          />
+        </CSSTransition>
 
         <CSSTransition
             in={canStart()}
             timeout={1000}
             classNames="element"
             mountOnEnter
+            unmountOnExit
         >
           <p>
             <Button onClick={start}>
@@ -38,19 +55,23 @@ export function Lobby({}: LobbyProps) {
     send({
       type: 'join',
       name: name,
-      playerId: name === 'yannick' ? 1 : 2
+      playerId: context.players.length + 1
     });
   }
 
   function chooseColor(color: PlayerColor) {
-    send({type: 'chooseColor', color, playerId: color === PlayerColor.PINK ? 1 : 2});
+    send({
+      type: 'chooseColor',
+      color,
+      playerId: context.players.find(p => p.color == undefined)?.id
+    });
   }
 
   function start() {
-    send({type: 'start', playerId: 1});
+    send({type: 'start', playerId: context.players[0]?.id});
   }
 
   function canStart() {
-    return can({type: 'start', playerId: 1});
+    return can({type: 'start', playerId: context.players[0]?.id});
   }
 }
