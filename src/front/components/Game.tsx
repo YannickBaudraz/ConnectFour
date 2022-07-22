@@ -3,6 +3,7 @@ import React from 'react';
 import styled, {css, keyframes} from 'styled-components';
 import {Grid, PlayerColor} from '../../types';
 import {Disc} from '../styles';
+import {useGame} from '../hooks/useGame';
 
 type GridProps = {
   grid: Grid
@@ -11,10 +12,7 @@ type GridProps = {
 }
 
 export function Game({grid, currentColor, onDrop}: GridProps) {
-  function handleDrop(x: number, event: React.MouseEvent) {
-    event.preventDefault();
-    onDrop?.(x);
-  }
+  const game = useGame();
 
   return (
       <article>
@@ -27,11 +25,15 @@ export function Game({grid, currentColor, onDrop}: GridProps) {
               ? <Disc key={`${x}-${y}`}
                       color={undefined}
                       diameter={5}/>
-              : <Cell key={`${x}-${y}`}
-                      color={color}
-                      diameter={5}
-                      y={y}
-              />
+              : isWining(x, y)
+                  ? <WiningCell key={`${x}-${y}`}
+                                color={color}
+                                diameter={5}
+                                y={y}/>
+                  : <Cell key={`${x}-${y}`}
+                          color={color}
+                          diameter={5}
+                          y={y}/>
           ))}
           {currentColor && onDrop &&
               <Columns>
@@ -49,6 +51,15 @@ export function Game({grid, currentColor, onDrop}: GridProps) {
         </GridElement>
       </article>
   );
+
+  function handleDrop(x: number, event: React.MouseEvent) {
+    event.preventDefault();
+    onDrop?.(x);
+  }
+
+  function isWining(x: number, y: number) {
+    return game.context.winingLine.some(position => position.x === x && position.y === y);
+  }
 }
 
 const Title = styled.h2`
@@ -91,6 +102,11 @@ const Cell = styled(Disc)<{ y: number }>(props => {
     z-index: -1;
   `;
 });
+
+const WiningCell = styled(Cell)`
+  outline: solid var(--style-size) ${props => Color(props.color).lighten(0.5).hex()};
+  box-shadow: inset 0 0 0 var(--style-size) ${props => Color(props.color).lighten(0.5).hex()};
+`;
 
 const Columns = styled.div`
   position: absolute;

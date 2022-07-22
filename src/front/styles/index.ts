@@ -1,5 +1,5 @@
 import Color from 'color';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {PlayerColor} from '../../types';
 
 export const Button = styled.button`
@@ -75,17 +75,16 @@ export const AlertClose = styled.button`
   }
 `;
 
-export const Disc = styled.div<{ diameter: number, color?: string }>`
-  --diameter: ${props => props.diameter}em;
-  --style-size: ${props => props.diameter / 10}em;
+export const Disc = styled.div<{ diameter: number, color?: string }>(props => css`
+  --diameter: ${props.diameter}em;
+  --style-size: ${props.diameter / 10}em;
 
   width: var(--diameter);
   height: auto;
   aspect-ratio: 1 / 1;
   border-radius: 100%;
-  background-color: ${props => props.color || 'inherit'};
-  box-shadow: inset 0 0 0 var(--style-size) ${props => props.color && Color(props.color).darken(0.3).hex() ||
-          'inherit'};
-  border: solid var(--style-size) ${props => props.color || 'inherit'};
-  outline: solid var(--style-size) ${props => props.color && Color(props.color).darken(0.3).hex() || 'inherit'};
-`;
+  outline: solid var(--style-size) ${props.color && Color(props.color).darken(0.3).hex() || 'inherit'};
+  border: solid var(--style-size) ${props.color || 'inherit'};
+  box-shadow: inset 0 0 0 var(--style-size) ${props.color && Color(props.color).darken(0.3).hex() || 'inherit'};
+  background-color: ${props.color || 'inherit'};
+`);
