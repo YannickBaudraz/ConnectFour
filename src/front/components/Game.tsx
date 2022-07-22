@@ -23,11 +23,14 @@ export function Game({grid, currentColor, onDrop}: GridProps) {
         </Title>
 
         <GridElement grid={grid}>
-          {grid.map((row, y) => row.map((color, x) =>
-              <Cell key={`${x}-${y}`}
-                    color={color !== 'E' ? color : undefined}
-                    diameter={5}
-                    y={y}
+          {grid.map((row, y) => row.map((color, x) => color === 'E'
+              ? <Disc key={`${x}-${y}`}
+                      color={undefined}
+                      diameter={5}/>
+              : <Cell key={`${x}-${y}`}
+                      color={color}
+                      diameter={5}
+                      y={y}
               />
           ))}
           {currentColor && onDrop &&
@@ -52,6 +55,7 @@ const Title = styled.h2`
   text-align: center;
 `;
 
+const gradientColor = Color('lightpink').darken(.1).string();
 const GridElement = styled.div<{ grid: Grid }>`
   --rows: ${props => props.grid.length};
   --cols: ${props => props.grid[0].length};
@@ -63,12 +67,12 @@ const GridElement = styled.div<{ grid: Grid }>`
   aspect-ratio: var(--cols) / var(--rows);
   place-items: center;
   place-content: center;
-  background: radial-gradient(circle, transparent, transparent 49%, ${Color('lightpink').darken(
-          .05).string()} 51%, ${Color('lightpink').darken(.05).string()} 60%, lightpink 70%);
+  background: radial-gradient(circle,
+  transparent, transparent 49%, ${gradientColor} 51%, ${gradientColor} 57.5%, lightpink 50%);
   background-size: calc(100% / var(--cols)) calc(100% / var(--rows));
   border: .6rem solid ${Color('lightpink').darken(.05).string()};
   border-radius: .3rem;
-  margin-top: calc(100% / var(--rows));
+  margin-top: calc(75% / var(--rows));
 
   && ${Disc} {
     width: 60%;
@@ -78,12 +82,12 @@ const GridElement = styled.div<{ grid: Grid }>`
 const Cell = styled(Disc)<{ y: number }>(props => {
   const Drop = keyframes`
     from {
-      transform: translateY(calc(-202% * ${props.y}));
+      transform: translateY(calc(-150% * ${props.y}));
     }
   `;
 
   return css`
-    animation: ${Drop} calc(.13s * ${props.y}) linear both;
+    animation: ${Drop} calc(.2s * ${props.y}) linear both;
     z-index: -1;
   `;
 });
@@ -121,6 +125,7 @@ const Column = styled.button`
     opacity: 1;
     transform: translateY(2.5rem);
     transition: opacity 0s ease-in, transform .2s cubic-bezier(0, 1, 1, 1);
+    z-index: -2;
   }
 
   &&:active ${Disc} {
