@@ -3,7 +3,7 @@ import {GameInfo} from '../components/GameInfo';
 
 type PlayProps = {}
 
-export function Play({}: PlayProps) {
+export function PlayState({}: PlayProps) {
   const {context} = useGame();
 
   return (

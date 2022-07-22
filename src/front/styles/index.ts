@@ -28,7 +28,6 @@ export const Button = styled.button`
   }
 
   &:active:not(:disabled) {
-    background-color: ${props => props.color};
     transform: scale(.95);
   }
 `;

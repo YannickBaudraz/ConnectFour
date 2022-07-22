@@ -7,7 +7,7 @@ import {CSSTransition} from 'react-transition-group';
 
 type LobbyProps = {}
 
-export function Lobby({}: LobbyProps) {
+export function LobbyState({}: LobbyProps) {
   const {send, context, can} = useGame();
 
   return (

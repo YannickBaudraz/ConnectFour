@@ -1,14 +1,12 @@
-import React from 'react';
 import styled from 'styled-components';
-import {Player} from '../../types';
-import {Button, Disc} from '../styles';
+import {Button} from '../styles';
+import React from 'react';
 
-type VictoryProps = {
-  player?: Player,
+type DrawProps = {
   onRestart?: () => void
 }
 
-export function Victory({player, onRestart}: VictoryProps) {
+export function Draw({onRestart}: DrawProps) {
   function handleRestart(event: React.MouseEvent) {
     event.preventDefault();
     onRestart?.();
@@ -17,7 +15,7 @@ export function Victory({player, onRestart}: VictoryProps) {
   return (
       <Container>
         <Title>
-          {player?.name} a gagné ! <Disc diameter={1} color={player?.color}/>
+          Il n'y en a pas un pour rattraper l'autre...
         </Title>
         <Button onClick={handleRestart}>
           Rejouer

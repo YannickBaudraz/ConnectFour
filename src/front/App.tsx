@@ -1,10 +1,12 @@
 import {useGame} from './hooks/useGame';
 import {State} from '../types';
-import {Lobby} from './screens/Lobby';
-import {Play} from './screens/Play';
+import {LobbyState} from './states/LobbyState';
+import {PlayState} from './states/PlayState';
 import {Game} from './components/Game';
 import {CSSTransition} from 'react-transition-group';
 import styled from 'styled-components';
+import {VictoryState} from './states/VictoryState';
+import {DrawState} from './states/DrawState';
 
 function App() {
   const {state, context, send} = useGame();
@@ -19,7 +21,7 @@ function App() {
             classNames="element"
             unmountOnExit
         >
-          <Lobby/>
+          <LobbyState/>
         </CSSTransition>
 
         <CSSTransition
@@ -28,7 +30,26 @@ function App() {
             classNames="element"
             unmountOnExit
         >
-          <Play/>
+          <PlayState/>
+        </CSSTransition>
+
+        <CSSTransition
+            in={state === State.VICTORY}
+            timeout={300}
+            classNames="element"
+            mountOnEnter
+            unmountOnExit
+        >
+          <VictoryState/>
+        </CSSTransition>
+
+        <CSSTransition
+            in={state === State.DRAW}
+            timeout={300}
+            classNames="element"
+            unmountOnExit
+        >
+          <DrawState/>
         </CSSTransition>
 
         <CSSTransition
